@@ -1,0 +1,47 @@
+<html>
+<head>
+<script language="VBScript"> 
+Function GetFileName( myDir, myFilter )
+  ' Written by Rob van der Woude
+  ' http://www.robvanderwoude.com
+
+  ' Standard housekeeping
+  Dim objDialog
+
+  ' Create a dialog object
+  Set objDialog = CreateObject( "UserAccounts.CommonDialog" )
+
+  ' Check arguments and use defaults when necessary
+  If myDir = "" Then
+    ' Default initial folder is "My Documents"
+    objDialog.InitialDir = CreateObject( "WScript.Shell" ).SpecialFolders( "MyDocuments" )
+  Else
+    ' Use the specified initial folder
+    objDialog.InitialDir = myDir
+  End If
+  If myFilter = "" Then
+    ' Default file filter is "All files"
+    objDialog.Filter = "All files|*.*"
+  Else
+    ' Use the specified file filter
+    objDialog.Filter = myFilter
+  End If
+
+  ' Open the dialog and return the selected file name
+  If objDialog.ShowOpen Then
+    GetFileName = objDialog.FileName
+  Else
+    GetFileName = ""
+  End If
+End Function
+Sub RunProgram(path)
+    Set objShell = CreateObject("Wscript.Shell")
+    objShell.Run path
+End Sub
+RunProgram(GetFileName("P:\", ""))
+</script>
+</head> 
+<body>
+    Nothing to see here..
+</body>
+</html>
